@@ -1,0 +1,12 @@
+﻿################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+
+/BackEnd1API/bin/Debug/net7.0
+/BackEnd1API/obj
+/BackEnd2Api/bin/Debug/net7.0
+/BackEnd2Api/obj
+/FrontEndAPI/bin/Debug/net7.0
+/FrontEndAPI/obj/Debug/net7.0
+/FrontEndAPI/obj
+/.vs
