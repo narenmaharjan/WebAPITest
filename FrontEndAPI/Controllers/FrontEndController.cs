@@ -1,11 +1,12 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using FrontEndApi.Filters;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace FrontEndApi.Controllers
 {
-    //[Authorize]
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class FrontEndController : ControllerBase
@@ -20,31 +21,49 @@ namespace FrontEndApi.Controllers
         }
 
         // GET: api/<FrontEndController>
-        [HttpGet]
+        [HttpGet, BasicAuthorization]
         public async Task<IActionResult> Get()
         {
-            var result1 = await _httpClient.GetAsync(BackEnd1RequestUri);
-            var result2 = await _httpClient.GetAsync(BackEnd2RequestUri);
+            var response1 = await _httpClient.GetAsync(BackEnd1RequestUri);
+            var response2 = await _httpClient.GetAsync(BackEnd2RequestUri);
 
-            var content1 = await result1.Content.ReadAsStringAsync();
-            var content2 = await result2.Content.ReadAsStringAsync();
+            string content1 = string.Empty;
+            if (response1.IsSuccessStatusCode)
+            {
+                content1 = await response1.Content.ReadAsStringAsync();
+            }
+            string content2 = string.Empty;
+
+            if (response1.IsSuccessStatusCode)
+            {
+                content2 = await response2.Content.ReadAsStringAsync();
+            }
+                  
 
             return Ok(new { Backend1Result = content1, Backend2Result = content2 });
         }
 
 
-        [HttpPost]
+        [HttpPost, BasicAuthorization]
         public async Task<IActionResult> Post([FromBody] string data)
         {
-            var result1 = await _httpClient.PostAsync(BackEnd1RequestUri, new StringContent(data));
-            var result2 = await _httpClient.PostAsync(BackEnd2RequestUri, new StringContent(data));
+            var response1 = await _httpClient.PostAsync(BackEnd1RequestUri, new StringContent(data));
+            var response2 = await _httpClient.PostAsync(BackEnd2RequestUri, new StringContent(data));
 
-            var content1 = await result1.Content.ReadAsStringAsync();
-            var content2 = await result2.Content.ReadAsStringAsync();
+            string content1=string.Empty;
+            if (response1.IsSuccessStatusCode)
+            {
+                content1 = await response1.Content.ReadAsStringAsync();
+            }
+            string content2= string.Empty;
+            if (response1.IsSuccessStatusCode)
+            {
+                content2 = await response2.Content.ReadAsStringAsync();
+            }
 
             return Ok(new { Backend1Result = content1, Backend2Result = content2 });
         }
 
-
+       
     }
 }
