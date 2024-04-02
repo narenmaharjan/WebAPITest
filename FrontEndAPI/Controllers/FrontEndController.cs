@@ -19,7 +19,7 @@ namespace FrontEndApi.Controllers
             _httpClientRepository = httpClientRepository ?? throw new ArgumentNullException(nameof(httpClientRepository));
         }
 
-        // GET: api/<FrontEndController>
+        
         [HttpGet, BasicAuthorization]
         public async Task<IActionResult> Get()
         {
